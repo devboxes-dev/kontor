@@ -1,0 +1,22 @@
+{
+  "name": "@kontor/api",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch src/index.ts",
+    "start": "node src/index.ts",
+    "typecheck": "tsc"
+  },
+  "dependencies": {
+    "@hono/node-server": "2.0.4",
+    "@hono/zod-validator": "0.8.0",
+    "@kontor/db": "workspace:*",
+    "drizzle-orm": "0.45.2",
+    "hono": "4.12.22",
+    "zod": "4.4.3"
+  },
+  "devDependencies": {
+    "@types/node": "24.12.4",
+    "typescript": "6.0.3"
+  }
+}
