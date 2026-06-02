@@ -1,0 +1,10 @@
+import { describe, expect, it } from "vitest";
+import { renderInvoicePdf } from "../src/index.ts";
+import { invoice } from "./fixtures.ts";
+import { pdfText } from "./pdf-text.ts";
+
+describe("renderInvoicePdf", () => {
+  it("renders an invoice", async () => {
+    expect(await pdfText(await renderInvoicePdf(invoice))).toMatchSnapshot();
+  });
+});

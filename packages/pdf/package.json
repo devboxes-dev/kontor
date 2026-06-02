@@ -6,13 +6,16 @@
     ".": "./src/index.ts"
   },
   "scripts": {
-    "typecheck": "tsc"
+    "typecheck": "tsc",
+    "test": "vitest run"
   },
   "dependencies": {
     "pdf-lib": "1.17.1"
   },
   "devDependencies": {
     "@types/node": "24.12.4",
-    "typescript": "6.0.3"
+    "pdfjs-dist": "5.7.284",
+    "typescript": "6.0.3",
+    "vitest": "4.1.7"
   }
 }
