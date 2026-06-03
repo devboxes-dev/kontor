@@ -19,6 +19,9 @@ importers:
       '@kontor/db':
         specifier: workspace:*
         version: link:../../packages/db
+      '@kontor/pdf':
+        specifier: workspace:*
+        version: link:../../packages/pdf
       drizzle-orm:
         specifier: 0.45.2
         version: 0.45.2(@electric-sql/pglite@0.4.5)(@types/pg@8.20.0)(pg@8.21.0)

@@ -1,5 +1,6 @@
 import { zValidator } from "@hono/zod-validator";
 import { addDays, customers, type Database, invoices, leipzigDate, lineItems } from "@kontor/db";
+import { renderInvoicePdf } from "@kontor/pdf";
 import { desc, eq } from "drizzle-orm";
 import { Hono } from "hono";
 import { z } from "zod";
@@ -55,10 +56,24 @@ export function invoiceRoutes(db: Database) {
       return c.json(invoice, 201);
     })
     .get("/:id", async (c) => {
-      const id = c.req.param("id");
-      const [invoice] = await db.select().from(invoices).where(eq(invoices.id, id));
+      const invoice = await findInvoice(db, c.req.param("id"));
+      return invoice ? c.json(invoice) : c.notFound();
+    })
+    .get("/:id/pdf", async (c) => {
+      const invoice = await findInvoice(db, c.req.param("id"));
       if (!invoice) return c.notFound();
-      const lines = await db.select().from(lineItems).where(eq(lineItems.invoiceId, id)).orderBy(lineItems.position);
-      return c.json({ ...invoice, lines });
+      const pdf = await renderInvoicePdf(invoice);
+      return c.body(new Uint8Array(pdf), 200, { "content-type": "application/pdf" });
     });
+}
+
+async function findInvoice(db: Database, id: string) {
+  const [row] = await db
+    .select()
+    .from(invoices)
+    .innerJoin(customers, eq(invoices.customerId, customers.id))
+    .where(eq(invoices.id, id));
+  if (!row) return undefined;
+  const lines = await db.select().from(lineItems).where(eq(lineItems.invoiceId, id)).orderBy(lineItems.position);
+  return { ...row.invoices, customer: row.customers, lines };
 }

@@ -62,4 +62,11 @@ describe("invoices", () => {
     expect(second.number).toMatch(/^\d{4}-00002$/);
     expect(first.dueOn).toBe("2026-04-15");
   });
+
+  it("serves the invoice as a PDF", async () => {
+    const invoice = await createInvoice();
+    const response = await api.invoices[":id"].pdf.$get({ param: { id: invoice.id } });
+    expect(response.headers.get("content-type")).toBe("application/pdf");
+    expect(new TextDecoder().decode((await response.arrayBuffer()).slice(0, 5))).toBe("%PDF-");
+  });
 });
