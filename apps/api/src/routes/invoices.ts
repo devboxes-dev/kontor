@@ -1,5 +1,13 @@
 import { zValidator } from "@hono/zod-validator";
-import { addDays, customers, type Database, invoices, leipzigDate, lineItems } from "@kontor/db";
+import {
+  addDays,
+  customers,
+  type Database,
+  findInvoice,
+  invoices,
+  leipzigDate,
+  lineItems,
+} from "@kontor/db";
 import { renderInvoicePdf } from "@kontor/pdf";
 import { desc, eq } from "drizzle-orm";
 import { Hono } from "hono";
@@ -65,15 +73,4 @@ export function invoiceRoutes(db: Database) {
       const pdf = await renderInvoicePdf(invoice);
       return c.body(new Uint8Array(pdf), 200, { "content-type": "application/pdf" });
     });
-}
-
-async function findInvoice(db: Database, id: string) {
-  const [row] = await db
-    .select()
-    .from(invoices)
-    .innerJoin(customers, eq(invoices.customerId, customers.id))
-    .where(eq(invoices.id, id));
-  if (!row) return undefined;
-  const lines = await db.select().from(lineItems).where(eq(lineItems.invoiceId, id)).orderBy(lineItems.position);
-  return { ...row.invoices, customer: row.customers, lines };
 }

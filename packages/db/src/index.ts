@@ -4,6 +4,7 @@ import * as schema from "./schema.ts";
 
 export * from "./schema.ts";
 export * from "./calendar.ts";
+export { findInvoice } from "./queries.ts";
 export { schema };
 
 export type Database = PgDatabase<PgQueryResultHKT, typeof schema>;
