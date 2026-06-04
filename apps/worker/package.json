@@ -1,0 +1,21 @@
+{
+  "name": "@kontor/worker",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.ts",
+    "typecheck": "tsc",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@kontor/db": "workspace:*",
+    "@kontor/pdf": "workspace:*",
+    "croner": "10.0.1",
+    "drizzle-orm": "0.45.2"
+  },
+  "devDependencies": {
+    "@types/node": "24.12.4",
+    "typescript": "6.0.3",
+    "vitest": "4.1.7"
+  }
+}
