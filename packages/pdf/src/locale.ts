@@ -1,5 +1,6 @@
 export const labels = {
   invoice: "Rechnung",
+  reminder: { 1: "Zahlungserinnerung", 2: "Mahnung", 3: "Letzte Mahnung" },
   invoiceDate: "Rechnungsdatum",
   position: "Pos.",
   description: "Beschreibung",
@@ -10,6 +11,8 @@ export const labels = {
   vat: (ratePercent: number) => `USt. ${ratePercent} %`,
   total: "Gesamtbetrag",
   paymentTerms: "Zahlbar innerhalb von 14 Tagen ohne Abzug.",
+  reminderText: (number: string) =>
+    `Zu Rechnung ${number} konnten wir noch keine Zahlung feststellen. Bitte überweisen Sie den offenen Betrag.`,
 };
 
 const money = new Intl.NumberFormat("de-DE", { style: "currency", currency: "EUR" });

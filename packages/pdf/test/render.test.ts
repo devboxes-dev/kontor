@@ -7,4 +7,9 @@ describe("renderInvoicePdf", () => {
   it("renders an invoice", async () => {
     expect(await pdfText(await renderInvoicePdf(invoice))).toMatchSnapshot();
   });
+
+  it("renders a reminder", async () => {
+    const reminder = { ...invoice, reminder: { level: 2 as const } };
+    expect(await pdfText(await renderInvoicePdf(reminder))).toMatchSnapshot();
+  });
 });

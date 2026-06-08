@@ -1,5 +1,27 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`renderInvoicePdf > renders a reminder 1`] = `
+[
+  "Kontor GmbH · Beispielweg 4 · 04109 Leipzig",
+  "Gärtnerei Lindenau GmbH",
+  "Saalfelder Straße 9",
+  "04179 Leipzig",
+  "DE",
+  "Mahnung",
+  "Rechnungsdatum: 01.04.2026",
+  "Pos. Beschreibung Menge Einzelpreis Betrag",
+  "1 Kontor Basis, April 2026 1 29,00 € 29,00 €",
+  "2 Zusätzliche Nutzer 3 4,50 € 13,50 €",
+  "3 SMS-Erinnerungen 120 0,09 € 10,80 €",
+  "Zwischensumme 53,30 €",
+  "USt. 19 % 10,13 €",
+  "Gesamtbetrag 63,43 €",
+  "Zu Rechnung 2026-00412 konnten wir noch keine Zahlung feststellen. Bitte überweisen Sie den offenen Betrag.",
+  "Kontor GmbH · Beispielweg 4 · 04109 Leipzig · Amtsgericht Leipzig HRB 00000",
+  "USt-IdNr. DE000000000 · IBAN DE89 3704 0044 0532 0130 00",
+]
+`;
+
 exports[`renderInvoicePdf > renders an invoice 1`] = `
 [
   "Kontor GmbH · Beispielweg 4 · 04109 Leipzig",

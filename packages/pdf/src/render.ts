@@ -14,6 +14,7 @@ export interface InvoiceDocument {
     country: string;
   };
   lines: { description: string; quantity: number; unitPriceCents: number }[];
+  reminder?: { level: 1 | 2 | 3 };
 }
 
 const seller = "Kontor GmbH · Beispielweg 4 · 04109 Leipzig";
@@ -40,7 +41,8 @@ export async function renderInvoicePdf(invoice: InvoiceDocument): Promise<Uint8A
   const address = [customer.name, customer.street, `${customer.postalCode} ${customer.city}`, customer.country];
   address.forEach((line, index) => text(line, left, 760 - index * 14));
 
-  text(`${labels.invoice} ${invoice.number}`, left, 660, bold, 16);
+  const title = invoice.reminder ? labels.reminder[invoice.reminder.level] : `${labels.invoice} ${invoice.number}`;
+  text(title, left, 660, bold, 16);
   text(`${labels.invoiceDate}: ${formatDate(invoice.issuedAt)}`, left, 636);
 
   let y = 600;
@@ -79,7 +81,7 @@ export async function renderInvoicePdf(invoice: InvoiceDocument): Promise<Uint8A
   textRight(page, formatMoney(netCents + vatCents), columns.amount, y, bold);
 
   y -= 40;
-  text(labels.paymentTerms, left, y);
+  text(invoice.reminder ? labels.reminderText(invoice.number) : labels.paymentTerms, left, y);
 
   footer.forEach((line, index) => text(line, left, 60 - index * 11, regular, 7));
 
