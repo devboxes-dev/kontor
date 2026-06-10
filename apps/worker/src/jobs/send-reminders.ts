@@ -1,6 +1,6 @@
 import { addDays, type Database, findInvoice, invoices, leipzigDate, reminders } from "@kontor/db";
 import { labels, renderInvoicePdf } from "@kontor/pdf";
-import { and, count, eq, isNull, lt } from "drizzle-orm";
+import { and, count, eq, isNotNull, isNull, lt } from "drizzle-orm";
 import type { MailSender } from "../mail.ts";
 
 export const reminderLevels = [
@@ -16,7 +16,7 @@ export async function sendReminders(db: Database, mail: MailSender, now = new Da
     .select({ id: invoices.id, dueOn: invoices.dueOn, reminded: count(reminders.id) })
     .from(invoices)
     .leftJoin(reminders, eq(reminders.invoiceId, invoices.id))
-    .where(and(isNull(invoices.paidAt), lt(invoices.dueOn, today)))
+    .where(and(isNotNull(invoices.sentAt), isNull(invoices.paidAt), lt(invoices.dueOn, today)))
     .groupBy(invoices.id);
 
   let sent = 0;

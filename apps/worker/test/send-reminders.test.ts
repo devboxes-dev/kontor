@@ -41,8 +41,9 @@ describe("sendReminders", () => {
     ]);
   });
 
-  it("does not remind paid invoices", async () => {
+  it("does not remind paid or unsent invoices", async () => {
     await createInvoice(db, { paid: true });
+    await createInvoice(db, { sent: false });
     const mail = fakeMail();
 
     expect(await sendReminders(db, mail.sender, morningOf("2026-04-22"))).toEqual({ sent: 0 });
