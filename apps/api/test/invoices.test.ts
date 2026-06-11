@@ -63,6 +63,12 @@ describe("invoices", () => {
     expect(first.dueOn).toBe("2026-04-15");
   });
 
+  it("rejects an invoice without lines", async () => {
+    const { id: customerId } = await createCustomer();
+    const response = await api.invoices.$post({ json: { customerId, lines: [] } });
+    expect(response.status).toBe(400);
+  });
+
   it("serves the invoice as a PDF", async () => {
     const invoice = await createInvoice();
     const response = await api.invoices[":id"].pdf.$get({ param: { id: invoice.id } });

@@ -17,13 +17,15 @@ const paymentTermDays = 14;
 
 const invoiceInput = z.object({
   customerId: z.uuid(),
-  lines: z.array(
-    z.object({
-      description: z.string().min(1),
-      quantity: z.int().positive(),
-      unitPriceCents: z.int().nonnegative(),
-    }),
-  ),
+  lines: z
+    .array(
+      z.object({
+        description: z.string().min(1),
+        quantity: z.int().positive(),
+        unitPriceCents: z.int().nonnegative(),
+      }),
+    )
+    .min(1),
 });
 
 export function invoiceRoutes(db: Database) {
