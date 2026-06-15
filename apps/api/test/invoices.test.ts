@@ -75,4 +75,14 @@ describe("invoices", () => {
     expect(response.headers.get("content-type")).toBe("application/pdf");
     expect(new TextDecoder().decode((await response.arrayBuffer()).slice(0, 5))).toBe("%PDF-");
   });
+
+  it("lists only unpaid invoices as open", async () => {
+    const paid = await createInvoice();
+    const open = await createInvoice();
+    expect((await api.invoices[":id"].payment.$post({ param: { id: paid.id } })).status).toBe(200);
+
+    const response = await api.invoices.$get({ query: { status: "open" } });
+    if (response.status !== 200) throw new Error(await response.text());
+    expect((await response.json()).map((invoice) => invoice.id)).toEqual([open.id]);
+  });
 });

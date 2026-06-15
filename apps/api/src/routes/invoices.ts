@@ -9,7 +9,7 @@ import {
   lineItems,
 } from "@kontor/db";
 import { renderInvoicePdf } from "@kontor/pdf";
-import { desc, eq } from "drizzle-orm";
+import { and, desc, eq, isNull } from "drizzle-orm";
 import { Hono } from "hono";
 import { z } from "zod";
 
@@ -30,7 +30,8 @@ const invoiceInput = z.object({
 
 export function invoiceRoutes(db: Database) {
   return new Hono()
-    .get("/", async (c) => {
+    .get("/", zValidator("query", z.object({ status: z.literal("open").optional() })), async (c) => {
+      const open = c.req.valid("query").status === "open";
       const rows = await db
         .select({
           id: invoices.id,
@@ -42,6 +43,7 @@ export function invoiceRoutes(db: Database) {
         })
         .from(invoices)
         .innerJoin(customers, eq(invoices.customerId, customers.id))
+        .where(open ? isNull(invoices.paidAt) : undefined)
         .orderBy(desc(invoices.issuedAt));
       return c.json(rows);
     })
@@ -74,5 +76,13 @@ export function invoiceRoutes(db: Database) {
       if (!invoice) return c.notFound();
       const pdf = await renderInvoicePdf(invoice);
       return c.body(new Uint8Array(pdf), 200, { "content-type": "application/pdf" });
+    })
+    .post("/:id/payment", async (c) => {
+      const [paid] = await db
+        .update(invoices)
+        .set({ paidAt: new Date() })
+        .where(and(eq(invoices.id, c.req.param("id")), isNull(invoices.paidAt)))
+        .returning();
+      return paid ? c.json(paid) : c.notFound();
     });
 }

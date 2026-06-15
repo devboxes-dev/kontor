@@ -5,6 +5,7 @@ Changes that customers or support notice. Versions follow [semantic versioning](
 ## Unreleased
 
 - The billing API and the worker live in one repository.
+- The back office can record a payment and list only the open invoices.
 
 ## Earlier versions
 
