@@ -1,5 +1,6 @@
 import { PDFDocument, type PDFFont, type PDFPage, StandardFonts, rgb } from "pdf-lib";
 import { formatDate, formatMoney, labels } from "./locale.ts";
+import { invoiceTotals } from "./totals.ts";
 
 export interface InvoiceDocument {
   number: string;
@@ -52,23 +53,19 @@ export async function renderInvoicePdf(invoice: InvoiceDocument): Promise<Uint8A
   textRight(page, labels.unitPrice, columns.unitPrice, y, bold);
   textRight(page, labels.amount, columns.amount, y, bold);
 
-  let netCents = 0;
-  let vatCents = 0;
   invoice.lines.forEach((line, index) => {
     y -= 18;
-    const amountCents = line.quantity * line.unitPriceCents;
-    netCents += amountCents;
-    vatCents += Math.round((amountCents * invoice.vatRatePercent) / 100);
     text(String(index + 1), columns.position, y);
     text(line.description, columns.description, y);
     textRight(page, String(line.quantity), columns.quantity, y, regular);
     textRight(page, formatMoney(line.unitPriceCents), columns.unitPrice, y, regular);
-    textRight(page, formatMoney(amountCents), columns.amount, y, regular);
+    textRight(page, formatMoney(line.quantity * line.unitPriceCents), columns.amount, y, regular);
   });
 
+  const totals = invoiceTotals(invoice);
   const sums: [string, number][] = [
-    [labels.net, netCents],
-    [labels.vat(invoice.vatRatePercent), vatCents],
+    [labels.net, totals.netCents],
+    [labels.vat(invoice.vatRatePercent), totals.vatCents],
   ];
   y -= 12;
   for (const [label, cents] of sums) {
@@ -78,7 +75,7 @@ export async function renderInvoicePdf(invoice: InvoiceDocument): Promise<Uint8A
   }
   y -= 22;
   textRight(page, labels.total, columns.unitPrice, y, bold);
-  textRight(page, formatMoney(netCents + vatCents), columns.amount, y, bold);
+  textRight(page, formatMoney(totals.totalCents), columns.amount, y, bold);
 
   y -= 40;
   text(invoice.reminder ? labels.reminderText(invoice.number) : labels.paymentTerms, left, y);
