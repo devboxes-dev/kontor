@@ -7,7 +7,7 @@ const customerInput = z.object({
   name: z.string().min(1),
   email: z.email(),
   street: z.string().min(1),
-  postalCode: z.string().min(1),
+  postalCode: z.string().regex(/^\d{4,5}$/),
   city: z.string().min(1),
   country: z.enum(["DE", "AT"]),
 });

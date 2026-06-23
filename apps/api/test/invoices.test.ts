@@ -48,6 +48,11 @@ describe("customers", () => {
     const response = await api.customers.$post({ json: { ...customer, email: "buchhaltung" } });
     expect(response.status).toBe(400);
   });
+
+  it("rejects a customer without a valid postal code", async () => {
+    const response = await api.customers.$post({ json: { ...customer, postalCode: "Leipzig" } });
+    expect(response.status).toBe(400);
+  });
 });
 
 describe("invoices", () => {
