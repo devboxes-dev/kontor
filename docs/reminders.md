@@ -18,4 +18,4 @@ An email to the customer's address with the reminder as a PDF attachment. The su
 
 ## Failures
 
-When the job fails, the next morning's run sends what is missing. Reminders that the job already recorded are not sent again.
+When the job fails, the worker runs it again 15 minutes later, up to three attempts in total. Reminders that the job already recorded are not sent again.

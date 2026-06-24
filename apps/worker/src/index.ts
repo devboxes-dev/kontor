@@ -3,6 +3,7 @@ import { Cron } from "croner";
 import { sendInvoices } from "./jobs/send-invoices.ts";
 import { sendReminders } from "./jobs/send-reminders.ts";
 import { httpMailSender } from "./mail.ts";
+import { runWithRetries } from "./retry.ts";
 
 function env(name: string): string {
   const value = process.env[name];
@@ -13,17 +14,9 @@ function env(name: string): string {
 const db = connect(env("DATABASE_URL"));
 const mail = httpMailSender({ url: env("MAIL_API_URL"), token: env("MAIL_API_TOKEN") });
 
-new Cron("*/10 * * * *", { protect: true }, () =>
-  sendInvoices(db, mail).then(
-    (result) => console.log("send-invoices: done", result),
-    (error) => console.error("send-invoices: failed", error),
-  ),
-);
+new Cron("*/10 * * * *", { protect: true }, () => runWithRetries("send-invoices", () => sendInvoices(db, mail)));
 new Cron("0 6 * * *", { timezone: "Europe/Berlin", protect: true }, () =>
-  sendReminders(db, mail).then(
-    (result) => console.log("send-reminders: done", result),
-    (error) => console.error("send-reminders: failed", error),
-  ),
+  runWithRetries("send-reminders", () => sendReminders(db, mail)),
 );
 
 console.log("worker started");
