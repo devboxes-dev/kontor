@@ -10,6 +10,7 @@ const customerInput = z.object({
   postalCode: z.string().regex(/^\d{4,5}$/),
   city: z.string().min(1),
   country: z.enum(["DE", "AT"]),
+  locale: z.enum(["de", "en"]).default("de"),
 });
 
 export function customerRoutes(db: Database) {

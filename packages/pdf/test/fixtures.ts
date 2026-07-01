@@ -12,6 +12,7 @@ export const invoice: InvoiceDocument = {
     postalCode: "04179",
     city: "Leipzig",
     country: "DE",
+    locale: "de",
   },
   lines: [
     { description: "Kontor Basis, April 2026", quantity: 1, unitPriceCents: 2900 },

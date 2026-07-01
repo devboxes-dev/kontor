@@ -1,5 +1,7 @@
 import { sql } from "drizzle-orm";
-import { date, integer, pgSequence, pgTable, text, timestamp, unique, uuid } from "drizzle-orm/pg-core";
+import { date, integer, pgEnum, pgSequence, pgTable, text, timestamp, unique, uuid } from "drizzle-orm/pg-core";
+
+export const locale = pgEnum("locale", ["de", "en"]);
 
 export const customers = pgTable("customers", {
   id: uuid().primaryKey().defaultRandom(),
@@ -9,6 +11,7 @@ export const customers = pgTable("customers", {
   postalCode: text().notNull(),
   city: text().notNull(),
   country: text().notNull(),
+  locale: locale().notNull().default("de"),
   createdAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
 });
 

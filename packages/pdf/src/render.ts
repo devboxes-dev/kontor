@@ -13,6 +13,7 @@ export interface InvoiceDocument {
     postalCode: string;
     city: string;
     country: string;
+    locale: "de" | "en";
   };
   lines: { description: string; quantity: number; unitPriceCents: number }[];
   reminder?: { level: 1 | 2 | 3 };

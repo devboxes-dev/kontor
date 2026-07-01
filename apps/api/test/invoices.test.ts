@@ -40,8 +40,14 @@ async function createInvoice() {
 }
 
 describe("customers", () => {
-  it("stores a customer", async () => {
-    expect(await createCustomer()).toMatchObject({ name: customer.name, country: "DE" });
+  it("stores German as the default language", async () => {
+    expect(await createCustomer()).toMatchObject({ name: customer.name, locale: "de" });
+  });
+
+  it("stores the customer's language", async () => {
+    const response = await api.customers.$post({ json: { ...customer, locale: "en" } });
+    if (response.status !== 201) throw new Error(await response.text());
+    expect(await response.json()).toMatchObject({ locale: "en" });
   });
 
   it("rejects a customer without a valid email address", async () => {
