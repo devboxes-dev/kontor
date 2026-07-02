@@ -6,6 +6,7 @@ Invoicing and payment reminders for small businesses in Germany and Austria.
 | --- | --- |
 | `apps/api` | HTTP API for customers, invoices, payments and invoice PDFs (Hono) |
 | `apps/worker` | Scheduled jobs: invoice emails every 10 minutes, payment reminders at 06:00 Leipzig time |
+| `apps/web` | Back-office page with the open invoices |
 | `packages/db` | Database schema and migrations (Drizzle, PostgreSQL) |
 | `packages/pdf` | Invoice and reminder PDFs (pdf-lib) |
 | `docs` | How reminders work, and how we work |
@@ -30,6 +31,7 @@ Start a PostgreSQL 17 and apply the migrations:
 export DATABASE_URL=postgres://kontor:kontor@localhost:5432/kontor
 pnpm --filter @kontor/db migrate
 pnpm --filter @kontor/api dev    # http://localhost:3000
+pnpm --filter @kontor/web dev    # http://localhost:5173, proxies /api to the API
 ```
 
 The worker also needs the mail API:
