@@ -6,7 +6,7 @@ Invoicing and payment reminders for small businesses in Germany and Austria.
 | --- | --- |
 | `apps/api` | HTTP API for customers, invoices, payments and invoice PDFs (Hono) |
 | `apps/worker` | Scheduled jobs: invoice emails every 10 minutes, payment reminders at 06:00 Leipzig time |
-| `apps/web` | Back-office page with the open invoices |
+| `apps/web` | Back-office page with the open invoices and a form for new customers |
 | `packages/db` | Database schema and migrations (Drizzle, PostgreSQL) |
 | `packages/pdf` | Invoice and reminder PDFs (pdf-lib) |
 | `docs` | How reminders work, and how we work |

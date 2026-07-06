@@ -18,6 +18,32 @@
           <tbody id="invoices"></tbody>
         </table>
       </section>
+      <section>
+        <h2>Neuer Kunde</h2>
+        <form id="customer">
+          <label>Name <input name="name" required /></label>
+          <label>E-Mail <input name="email" type="email" required /></label>
+          <label>Straße <input name="street" required /></label>
+          <label>PLZ <input name="postalCode" required pattern="\d{4,5}" /></label>
+          <label>Ort <input name="city" required /></label>
+          <label>
+            Land
+            <select name="country">
+              <option value="DE">Deutschland</option>
+              <option value="AT">Österreich</option>
+            </select>
+          </label>
+          <label>
+            Sprache
+            <select name="locale">
+              <option value="de">Deutsch</option>
+              <option value="en">Englisch</option>
+            </select>
+          </label>
+          <button>Anlegen</button>
+          <output></output>
+        </form>
+      </section>
     </main>
     <script type="module" src="/src/main.ts"></script>
   </body>

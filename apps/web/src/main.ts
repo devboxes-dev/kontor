@@ -6,6 +6,7 @@ interface OpenInvoice {
 }
 
 const invoiceRows = document.querySelector<HTMLTableSectionElement>("#invoices")!;
+const customerForm = document.querySelector<HTMLFormElement>("#customer")!;
 
 async function showOpenInvoices() {
   const response = await fetch("/api/invoices?status=open");
@@ -24,5 +25,16 @@ async function showOpenInvoices() {
     }),
   );
 }
+
+customerForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const response = await fetch("/api/customers", {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify(Object.fromEntries(new FormData(customerForm))),
+  });
+  customerForm.querySelector("output")!.textContent = response.ok ? "Kunde angelegt." : "Bitte die Eingaben prüfen.";
+  if (response.ok) customerForm.reset();
+});
 
 await showOpenInvoices();
