@@ -9,7 +9,7 @@ Invoicing and payment reminders for small businesses in Germany and Austria.
 | `apps/web` | Back-office page with the open invoices and a form for new customers |
 | `packages/db` | Database schema and migrations (Drizzle, PostgreSQL) |
 | `packages/pdf` | Invoice and reminder PDFs (pdf-lib) |
-| `docs` | How reminders work, and how we work |
+| `docs` | How invoices and reminders work, and how we work |
 
 ## Getting started
 
