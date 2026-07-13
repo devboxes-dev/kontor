@@ -1,0 +1,1 @@
+ALTER TABLE "reminders" ADD COLUMN "late_fee_cents" integer DEFAULT 0 NOT NULL;

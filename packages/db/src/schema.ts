@@ -52,6 +52,7 @@ export const reminders = pgTable(
       .notNull()
       .references(() => invoices.id, { onDelete: "cascade" }),
     level: integer().notNull(),
+    lateFeeCents: integer().notNull().default(0),
     sentOn: date().notNull(),
     sentAt: timestamp({ withTimezone: true }).notNull().defaultNow(),
   },

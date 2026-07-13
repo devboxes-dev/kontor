@@ -8,8 +8,8 @@ describe("renderInvoicePdf", () => {
     expect(await pdfText(await renderInvoicePdf(invoice))).toMatchSnapshot();
   });
 
-  it("renders a reminder", async () => {
-    const reminder = { ...invoice, reminder: { level: 2 as const } };
+  it("renders a reminder with the late fee", async () => {
+    const reminder = { ...invoice, reminder: { level: 2 as const, lateFeeCents: 500 } };
     expect(await pdfText(await renderInvoicePdf(reminder))).toMatchSnapshot();
   });
 });

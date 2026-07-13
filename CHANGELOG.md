@@ -10,6 +10,7 @@ Changes that customers or support notice. Versions follow [semantic versioning](
 - Failed worker jobs run again after 15 minutes, up to three attempts. Before, a failed reminder run waited until the next morning.
 - Customers have a language, German or English, for their invoices and reminders.
 - A back-office page lists the open invoices with a link to each PDF, and has a form for new customers, including their language.
+- The second and third reminder add a late fee of 5,00 €.
 
 ## Earlier versions
 

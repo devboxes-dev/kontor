@@ -9,6 +9,7 @@ export const labels = {
   amount: "Betrag",
   net: "Zwischensumme",
   vat: (ratePercent: number) => `USt. ${ratePercent} %`,
+  lateFee: "Mahngebühr",
   total: "Gesamtbetrag",
   paymentTerms: "Zahlbar innerhalb von 14 Tagen ohne Abzug.",
   reminderText: (number: string) =>

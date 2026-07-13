@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`renderInvoicePdf > renders a reminder 1`] = `
+exports[`renderInvoicePdf > renders a reminder with the late fee 1`] = `
 [
   "Kontor GmbH · Beispielweg 4 · 04109 Leipzig",
   "Gärtnerei Lindenau GmbH",
@@ -15,6 +15,7 @@ exports[`renderInvoicePdf > renders a reminder 1`] = `
   "3 SMS-Erinnerungen 120 0,09 € 10,80 €",
   "Zwischensumme 53,30 €",
   "USt. 19 % 10,13 €",
+  "Mahngebühr 5,00 €",
   "Gesamtbetrag 63,43 €",
   "Zu Rechnung 2026-00412 konnten wir noch keine Zahlung feststellen. Bitte überweisen Sie den offenen Betrag.",
   "Kontor GmbH · Beispielweg 4 · 04109 Leipzig · Amtsgericht Leipzig HRB 00000",

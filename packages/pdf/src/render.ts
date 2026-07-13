@@ -16,7 +16,7 @@ export interface InvoiceDocument {
     locale: "de" | "en";
   };
   lines: { description: string; quantity: number; unitPriceCents: number }[];
-  reminder?: { level: 1 | 2 | 3 };
+  reminder?: { level: 1 | 2 | 3; lateFeeCents: number };
 }
 
 const seller = "Kontor GmbH · Beispielweg 4 · 04109 Leipzig";
@@ -68,6 +68,7 @@ export async function renderInvoicePdf(invoice: InvoiceDocument): Promise<Uint8A
     [labels.net, totals.netCents],
     [labels.vat(invoice.vatRatePercent), totals.vatCents],
   ];
+  if (totals.lateFeeCents > 0) sums.push([labels.lateFee, totals.lateFeeCents]);
   y -= 12;
   for (const [label, cents] of sums) {
     y -= 18;

@@ -4,9 +4,9 @@ import { and, count, eq, isNotNull, isNull, lt } from "drizzle-orm";
 import type { MailSender } from "../mail.ts";
 
 export const reminderLevels = [
-  { level: 1, daysOverdue: 7 },
-  { level: 2, daysOverdue: 14 },
-  { level: 3, daysOverdue: 21 },
+  { level: 1, daysOverdue: 7, lateFeeCents: 0 },
+  { level: 2, daysOverdue: 14, lateFeeCents: 500 },
+  { level: 3, daysOverdue: 21, lateFeeCents: 500 },
 ] as const;
 
 export async function sendReminders(db: Database, mail: MailSender, now = new Date()) {
@@ -26,14 +26,14 @@ export async function sendReminders(db: Database, mail: MailSender, now = new Da
 
     const invoice = (await findInvoice(db, id))!;
     const title = labels.reminder[next.level];
-    const pdf = await renderInvoicePdf({ ...invoice, reminder: { level: next.level } });
+    const pdf = await renderInvoicePdf({ ...invoice, reminder: { level: next.level, lateFeeCents: next.lateFeeCents } });
     await mail.send({
       to: invoice.customer.email,
       subject: title,
       text: `Guten Tag,\n\nzu Rechnung ${invoice.number} konnten wir noch keine Zahlung feststellen. Die Details finden Sie im Anhang.\n\nViele Grüße\nIhr Kontor-Team`,
       attachments: [{ filename: `${title}-${invoice.number}.pdf`, content: pdf }],
     });
-    await db.insert(reminders).values({ invoiceId: id, level: next.level, sentOn: today });
+    await db.insert(reminders).values({ invoiceId: id, level: next.level, lateFeeCents: next.lateFeeCents, sentOn: today });
     sent++;
   }
   return { sent };

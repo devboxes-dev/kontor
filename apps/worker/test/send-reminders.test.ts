@@ -25,7 +25,7 @@ describe("sendReminders", () => {
     expect(mail.delivered.map((sent) => sent.subject)).toEqual(["Zahlungserinnerung"]);
   });
 
-  it("sends the next reminder every seven days, up to the third", async () => {
+  it("sends the next reminder every seven days, with the late fee from the second on", async () => {
     await createInvoice(db, { dueOn: "2026-04-15" });
     const mail = fakeMail();
 
@@ -34,10 +34,10 @@ describe("sendReminders", () => {
     }
 
     const sent = await db.select().from(reminders).orderBy(reminders.level);
-    expect(sent.map(({ level, sentOn }) => ({ level, sentOn }))).toEqual([
-      { level: 1, sentOn: "2026-04-22" },
-      { level: 2, sentOn: "2026-04-29" },
-      { level: 3, sentOn: "2026-05-06" },
+    expect(sent.map(({ level, lateFeeCents, sentOn }) => ({ level, lateFeeCents, sentOn }))).toEqual([
+      { level: 1, lateFeeCents: 0, sentOn: "2026-04-22" },
+      { level: 2, lateFeeCents: 500, sentOn: "2026-04-29" },
+      { level: 3, lateFeeCents: 500, sentOn: "2026-05-06" },
     ]);
   });
 
