@@ -17,7 +17,7 @@ async function showOpenInvoices() {
       const pdf = document.createElement("a");
       pdf.href = `/api/invoices/${invoice.id}/pdf`;
       pdf.textContent = "PDF";
-      for (const value of [invoice.number, invoice.customer, invoice.dueOn]) {
+      for (const value of [invoice.number, invoice.customer, invoice.dueOn.split("-").reverse().join(".")]) {
         row.insertCell().textContent = value;
       }
       row.insertCell().append(pdf);
