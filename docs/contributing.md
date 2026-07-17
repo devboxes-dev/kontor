@@ -14,6 +14,7 @@ How the billing team works on Kontor. Ask in #billing-eng if something here is u
 - Branch from `main` and name the branch `<your-name>/<topic>`.
 - CI runs the typecheck, the unit tests and the PDF snapshot tests. All three must pass before you merge.
 - One approval from the billing team, then merge with a merge commit.
+- If a PDF snapshot changes on purpose, update it with `pnpm --filter @kontor/pdf test -u` and point it out in the pull request.
 
 ## Releases
 
