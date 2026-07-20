@@ -12,9 +12,9 @@
     "migrate": "node src/migrate.ts"
   },
   "dependencies": {
-    "@electric-sql/pglite": "0.4.5",
+    "@electric-sql/pglite": "0.5.4",
     "drizzle-orm": "0.45.2",
-    "pg": "8.21.0"
+    "pg": "8.22.0"
   },
   "devDependencies": {
     "@types/node": "24.12.4",
