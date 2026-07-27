@@ -87,6 +87,11 @@ describe("invoices", () => {
     expect(new TextDecoder().decode((await response.arrayBuffer()).slice(0, 5))).toBe("%PDF-");
   });
 
+  it("rejects a malformed invoice id", async () => {
+    const response = await api.invoices[":id"].pdf.$get({ param: { id: "2026-00412" } });
+    expect(response.status).toBe(400);
+  });
+
   it("lists only unpaid invoices as open", async () => {
     const paid = await createInvoice();
     const open = await createInvoice();

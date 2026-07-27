@@ -28,6 +28,8 @@ const invoiceInput = z.object({
     .min(1),
 });
 
+const idParam = z.object({ id: z.uuid() });
+
 export function invoiceRoutes(db: Database) {
   return new Hono()
     .get("/", zValidator("query", z.object({ status: z.literal("open").optional() })), async (c) => {
@@ -67,21 +69,21 @@ export function invoiceRoutes(db: Database) {
       });
       return c.json(invoice, 201);
     })
-    .get("/:id", async (c) => {
-      const invoice = await findInvoice(db, c.req.param("id"));
+    .get("/:id", zValidator("param", idParam), async (c) => {
+      const invoice = await findInvoice(db, c.req.valid("param").id);
       return invoice ? c.json(invoice) : c.notFound();
     })
-    .get("/:id/pdf", async (c) => {
-      const invoice = await findInvoice(db, c.req.param("id"));
+    .get("/:id/pdf", zValidator("param", idParam), async (c) => {
+      const invoice = await findInvoice(db, c.req.valid("param").id);
       if (!invoice) return c.notFound();
       const pdf = await renderInvoicePdf(invoice);
       return c.body(new Uint8Array(pdf), 200, { "content-type": "application/pdf" });
     })
-    .post("/:id/payment", async (c) => {
+    .post("/:id/payment", zValidator("param", idParam), async (c) => {
       const [paid] = await db
         .update(invoices)
         .set({ paidAt: new Date() })
-        .where(and(eq(invoices.id, c.req.param("id")), isNull(invoices.paidAt)))
+        .where(and(eq(invoices.id, c.req.valid("param").id), isNull(invoices.paidAt)))
         .returning();
       return paid ? c.json(paid) : c.notFound();
     });
