@@ -84,6 +84,7 @@ describe("invoices", () => {
     const invoice = await createInvoice();
     const response = await api.invoices[":id"].pdf.$get({ param: { id: invoice.id } });
     expect(response.headers.get("content-type")).toBe("application/pdf");
+    expect(response.headers.get("content-disposition")).toBe(`inline; filename="Rechnung-${invoice.number}.pdf"`);
     expect(new TextDecoder().decode((await response.arrayBuffer()).slice(0, 5))).toBe("%PDF-");
   });
 

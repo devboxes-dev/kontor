@@ -77,7 +77,10 @@ export function invoiceRoutes(db: Database) {
       const invoice = await findInvoice(db, c.req.valid("param").id);
       if (!invoice) return c.notFound();
       const pdf = await renderInvoicePdf(invoice);
-      return c.body(new Uint8Array(pdf), 200, { "content-type": "application/pdf" });
+      return c.body(new Uint8Array(pdf), 200, {
+        "content-type": "application/pdf",
+        "content-disposition": `inline; filename="Rechnung-${invoice.number}.pdf"`,
+      });
     })
     .post("/:id/payment", zValidator("param", idParam), async (c) => {
       const [paid] = await db

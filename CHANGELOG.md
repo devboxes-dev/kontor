@@ -4,6 +4,8 @@ Changes that customers or support notice. Versions follow [semantic versioning](
 
 ## Unreleased
 
+- PDF downloads are named after the invoice, for example `Rechnung-2026-00412.pdf`.
+
 ## 1.4.0 (2026-08-05)
 
 - The billing API and the worker live in one repository.
