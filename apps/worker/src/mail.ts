@@ -10,7 +10,7 @@ export interface MailSender {
   send(mail: Mail, options?: { idempotencyKey?: string }): Promise<void>;
 }
 
-export function httpMailSender({ url, token }: { url: string; token: string }) {
+export function httpMailSender({ url, token, timeoutMs = 10_000 }: { url: string; token: string; timeoutMs?: number }) {
   return {
     async send(mail, { idempotencyKey } = {}) {
       const response = await fetch(new URL("/v1/messages", url), {
@@ -28,6 +28,7 @@ export function httpMailSender({ url, token }: { url: string; token: string }) {
             content: Buffer.from(content).toString("base64"),
           })),
         }),
+        signal: AbortSignal.timeout(timeoutMs),
       });
       if (!response.ok) throw new Error(`mail API answered ${response.status}: ${await response.text()}`);
     },

@@ -18,4 +18,4 @@ An email to the customer's address with the reminder as a PDF attachment. The su
 
 ## Failures
 
-When the job fails, the worker runs it again 15 minutes later, up to three attempts in total. Reminders that the job already recorded are not sent again.
+The worker gives up on a mail API call after 10 seconds. When the job fails, the worker runs it again 15 minutes later, up to three attempts in total. Reminders that the job already recorded are not sent again.
