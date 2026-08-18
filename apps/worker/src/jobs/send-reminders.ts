@@ -29,7 +29,7 @@ export async function sendReminders(db: Database, mail: MailSender, now = new Da
     const pdf = await renderInvoicePdf({ ...invoice, reminder: { level: next.level, lateFeeCents: next.lateFeeCents } });
     await mail.send({
       to: invoice.customer.email,
-      subject: title,
+      subject: `${title} zu Rechnung ${invoice.number}`,
       text: `Guten Tag,\n\nzu Rechnung ${invoice.number} konnten wir noch keine Zahlung feststellen. Die Details finden Sie im Anhang.\n\nViele Grüße\nIhr Kontor-Team`,
       attachments: [{ filename: `${title}-${invoice.number}.pdf`, content: pdf }],
     });

@@ -15,14 +15,14 @@ const morningOf = (date: string) => new Date(`${date}T04:00:00Z`);
 
 describe("sendReminders", () => {
   it("sends the first reminder seven days after the due date", async () => {
-    await createInvoice(db, { dueOn: "2026-04-15" });
+    const invoice = await createInvoice(db, { dueOn: "2026-04-15" });
     const mail = fakeMail();
 
     await sendReminders(db, mail.sender, morningOf("2026-04-21"));
     expect(mail.delivered).toHaveLength(0);
 
     await sendReminders(db, mail.sender, morningOf("2026-04-22"));
-    expect(mail.delivered.map((sent) => sent.subject)).toEqual(["Zahlungserinnerung"]);
+    expect(mail.delivered.map((sent) => sent.subject)).toEqual([`Zahlungserinnerung zu Rechnung ${invoice.number}`]);
   });
 
   it("sends the next reminder every seven days, with the late fee from the second on", async () => {

@@ -14,7 +14,7 @@ The reminder job runs every day at 06:00 Leipzig time. For each overdue invoice 
 
 ## What the customer gets
 
-An email to the customer's address with the reminder as a PDF attachment. The subject is the reminder's title. The PDF lists the invoice lines and, from level 2, the late fee.
+An email to the customer's address with the reminder as a PDF attachment. The subject names the reminder and the invoice number, for example "Mahnung zu Rechnung 2026-00412". The PDF lists the invoice lines and, from level 2, the late fee.
 
 ## Failures
 
