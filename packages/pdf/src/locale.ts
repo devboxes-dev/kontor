@@ -16,6 +16,8 @@ export const labels = {
     `Zu Rechnung ${number} konnten wir noch keine Zahlung feststellen. Bitte überweisen Sie den offenen Betrag.`,
 };
 
+export const countries: Record<string, string> = { DE: "Deutschland", AT: "Österreich" };
+
 const money = new Intl.NumberFormat("de-DE", { style: "currency", currency: "EUR" });
 
 const day = new Intl.DateTimeFormat("de-DE", {

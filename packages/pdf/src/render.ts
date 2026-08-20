@@ -1,5 +1,5 @@
 import { PDFDocument, type PDFFont, type PDFPage, StandardFonts, rgb } from "pdf-lib";
-import { formatDate, formatMoney, labels } from "./locale.ts";
+import { countries, formatDate, formatMoney, labels } from "./locale.ts";
 import { invoiceTotals } from "./totals.ts";
 
 export interface InvoiceDocument {
@@ -40,7 +40,8 @@ export async function renderInvoicePdf(invoice: InvoiceDocument): Promise<Uint8A
 
   text(seller, left, 790, regular, 7);
   const { customer } = invoice;
-  const address = [customer.name, customer.street, `${customer.postalCode} ${customer.city}`, customer.country];
+  const address = [customer.name, customer.street, `${customer.postalCode} ${customer.city}`];
+  if (customer.country !== "DE") address.push(countries[customer.country] ?? customer.country);
   address.forEach((line, index) => text(line, left, 760 - index * 14));
 
   const title = invoice.reminder ? labels.reminder[invoice.reminder.level] : `${labels.invoice} ${invoice.number}`;
