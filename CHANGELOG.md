@@ -8,6 +8,7 @@ Changes that customers or support notice. Versions follow [semantic versioning](
 - The worker gives up on a mail API call after 10 seconds instead of waiting for it indefinitely. The job then runs again 15 minutes later.
 - Reminder emails name the invoice number in the subject.
 - Invoices to German addresses leave out the country. Addresses in Austria end with "Österreich" instead of "AT".
+- The invoice footer shows the BIC next to the IBAN, for customers who pay from outside the euro area.
 
 ## 1.4.0 (2026-08-05)
 

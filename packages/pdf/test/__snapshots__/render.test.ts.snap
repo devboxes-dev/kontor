@@ -18,7 +18,7 @@ exports[`renderInvoicePdf > renders a reminder with the late fee 1`] = `
   "Gesamtbetrag 68,43 €",
   "Zu Rechnung 2026-00412 konnten wir noch keine Zahlung feststellen. Bitte überweisen Sie den offenen Betrag.",
   "Kontor GmbH · Beispielweg 4 · 04109 Leipzig · Amtsgericht Leipzig HRB 00000",
-  "USt-IdNr. DE000000000 · IBAN DE89 3704 0044 0532 0130 00",
+  "USt-IdNr. DE000000000 · IBAN DE89 3704 0044 0532 0130 00 · BIC COBADEFFXXX",
 ]
 `;
 
@@ -39,6 +39,6 @@ exports[`renderInvoicePdf > renders an invoice 1`] = `
   "Gesamtbetrag 63,43 €",
   "Zahlbar innerhalb von 14 Tagen ohne Abzug.",
   "Kontor GmbH · Beispielweg 4 · 04109 Leipzig · Amtsgericht Leipzig HRB 00000",
-  "USt-IdNr. DE000000000 · IBAN DE89 3704 0044 0532 0130 00",
+  "USt-IdNr. DE000000000 · IBAN DE89 3704 0044 0532 0130 00 · BIC COBADEFFXXX",
 ]
 `;

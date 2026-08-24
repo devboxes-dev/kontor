@@ -22,7 +22,7 @@ export interface InvoiceDocument {
 const seller = "Kontor GmbH · Beispielweg 4 · 04109 Leipzig";
 const footer = [
   "Kontor GmbH · Beispielweg 4 · 04109 Leipzig · Amtsgericht Leipzig HRB 00000",
-  "USt-IdNr. DE000000000 · IBAN DE89 3704 0044 0532 0130 00",
+  "USt-IdNr. DE000000000 · IBAN DE89 3704 0044 0532 0130 00 · BIC COBADEFFXXX",
 ];
 
 const left = 56;
