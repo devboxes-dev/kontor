@@ -12,6 +12,8 @@ The reminder job runs every day at 06:00 Leipzig time. For each overdue invoice 
 | 2 | 14 days after the due date | Mahnung | 5,00 € |
 | 3 | 21 days after the due date | Letzte Mahnung | 5,00 € |
 
+Since 1.5.0 the job sends nothing on Saturdays and Sundays. A reminder that falls on a weekend goes out the following Monday. Customers told support that reminders on a weekend felt pushy, and many pay on Friday by bank transfer, which only arrives on Monday. Public holidays are not taken into account.
+
 ## What the customer gets
 
 An email to the customer's address with the reminder as a PDF attachment. The subject names the reminder and the invoice number, for example "Mahnung zu Rechnung 2026-00412". The PDF lists the invoice lines and, from level 2, the late fee.

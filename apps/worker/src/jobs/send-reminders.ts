@@ -11,6 +11,7 @@ export const reminderLevels = [
 
 export async function sendReminders(db: Database, mail: MailSender, now = new Date()) {
   const today = leipzigDate(now);
+  if (isWeekend(today)) return { sent: 0 };
 
   const overdue = await db
     .select({ id: invoices.id, dueOn: invoices.dueOn, reminded: count(reminders.id) })
@@ -37,4 +38,9 @@ export async function sendReminders(db: Database, mail: MailSender, now = new Da
     sent++;
   }
   return { sent };
+}
+
+function isWeekend(date: string): boolean {
+  const day = new Date(`${date}T00:00:00Z`).getUTCDay();
+  return day === 0 || day === 6;
 }

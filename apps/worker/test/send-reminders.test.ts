@@ -58,4 +58,16 @@ describe("sendReminders", () => {
 
     expect(mail.delivered).toHaveLength(1);
   });
+
+  it("moves a reminder due on a weekend to Monday", async () => {
+    await createInvoice(db, { dueOn: "2026-04-18" });
+    const mail = fakeMail();
+
+    await sendReminders(db, mail.sender, morningOf("2026-04-25"));
+    await sendReminders(db, mail.sender, morningOf("2026-04-26"));
+    expect(mail.delivered).toHaveLength(0);
+
+    await sendReminders(db, mail.sender, morningOf("2026-04-27"));
+    expect(mail.delivered).toHaveLength(1);
+  });
 });

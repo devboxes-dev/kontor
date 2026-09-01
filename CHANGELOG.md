@@ -4,6 +4,7 @@ Changes that customers or support notice. Versions follow [semantic versioning](
 
 ## Unreleased
 
+- Move reminders due on a weekend to the next working day. A reminder that falls on a Saturday or Sunday now goes out on Monday.
 - PDF downloads are named after the invoice, for example `Rechnung-2026-00412.pdf`.
 - The worker gives up on a mail API call after 10 seconds instead of waiting for it indefinitely. The job then runs again 15 minutes later.
 - Reminder emails name the invoice number in the subject.
