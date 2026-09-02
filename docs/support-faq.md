@@ -9,3 +9,5 @@ Answers to the questions support gets most often about invoices and reminders. W
 **Why was there a late fee?** The second and third reminder add 5,00 €. The first reminder is free.
 
 **Can a customer get invoices in English?** Yes, set the language in the customer form to English.
+
+**Why did a reminder come on Monday instead of Saturday?** Since 1.5.0 reminders are not sent on weekends; one that falls on a Saturday or Sunday goes out on Monday.
