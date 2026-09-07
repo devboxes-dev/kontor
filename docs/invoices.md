@@ -16,4 +16,4 @@ Each customer has a language, German or English, chosen in the customer form. In
 
 ## PDF
 
-`packages/pdf` renders invoices and reminders. Its tests compare the text of the PDF with snapshots in `packages/pdf/test/__snapshots__`.
+`packages/pdf` renders invoices and reminders. Its tests compare the text of the PDF with snapshots in `packages/pdf/test/__snapshots__`. To look at the PDF itself, run `pnpm --filter @kontor/pdf render-fixture invoice.pdf`.
