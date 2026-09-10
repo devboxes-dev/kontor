@@ -20,5 +20,7 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - name: Typecheck
         run: pnpm typecheck
-      - name: Tests
-        run: pnpm test
+      - name: Unit tests
+        run: pnpm --filter './apps/*' test
+      - name: PDF snapshot tests
+        run: pnpm --filter @kontor/pdf test
