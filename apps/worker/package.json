@@ -11,11 +11,11 @@
     "@kontor/db": "workspace:*",
     "@kontor/pdf": "workspace:*",
     "croner": "10.0.1",
-    "drizzle-orm": "0.45.2"
+    "drizzle-orm": "0.45.3"
   },
   "devDependencies": {
-    "@types/node": "24.12.4",
+    "@types/node": "24.19.0",
     "typescript": "6.0.3",
-    "vitest": "4.1.10"
+    "vitest": "5.0.3"
   }
 }

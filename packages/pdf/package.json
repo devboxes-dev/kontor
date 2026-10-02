@@ -14,9 +14,9 @@
     "pdf-lib": "1.17.1"
   },
   "devDependencies": {
-    "@types/node": "24.12.4",
-    "pdfjs-dist": "6.1.200",
+    "@types/node": "24.19.0",
+    "pdfjs-dist": "6.3.289",
     "typescript": "6.0.3",
-    "vitest": "4.1.10"
+    "vitest": "5.0.3"
   }
 }
