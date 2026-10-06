@@ -11,3 +11,5 @@ Answers to the questions support gets most often about invoices and reminders. W
 **Can a customer get invoices in English?** Yes, set the language in the customer form to English.
 
 **Why did a reminder come on Monday instead of Saturday?** Since 1.5.0 reminders are not sent on weekends; one that falls on a Saturday or Sunday goes out on Monday.
+
+**A customer disputes a late fee.** Finance can waive it. Forward the email to finance with the invoice number; do not promise a refund before they confirm.
