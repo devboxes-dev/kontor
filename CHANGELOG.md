@@ -4,6 +4,8 @@ Changes that customers or support notice. Versions follow [semantic versioning](
 
 ## Unreleased
 
+- The customer form checks postal codes by country: five digits in Germany, four in Austria.
+
 ## 1.5.0 (2026-09-16)
 
 - Move reminders due on a weekend to the next working day. A reminder that falls on a Saturday or Sunday now goes out on Monday.

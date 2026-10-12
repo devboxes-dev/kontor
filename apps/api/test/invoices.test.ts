@@ -59,6 +59,11 @@ describe("customers", () => {
     const response = await api.customers.$post({ json: { ...customer, postalCode: "Leipzig" } });
     expect(response.status).toBe(400);
   });
+
+  it("rejects a German postal code with four digits", async () => {
+    const response = await api.customers.$post({ json: { ...customer, postalCode: "4179" } });
+    expect(response.status).toBe(400);
+  });
 });
 
 describe("invoices", () => {
