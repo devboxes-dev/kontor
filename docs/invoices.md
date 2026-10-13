@@ -3,7 +3,7 @@
 ## Numbers and dates
 
 - Invoice numbers have the form `2026-00412`: the year in Leipzig, then a number from one sequence that never restarts.
-- The invoice date is the day in Leipzig when the invoice was created. Payment is due 14 days later.
+- The invoice date is the day in Leipzig when the invoice was created. Payment is due 14 days later, and the invoice names that date.
 - VAT is 19 %, rounded once on the net total.
 
 ## Sending

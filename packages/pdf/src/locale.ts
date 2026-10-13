@@ -11,7 +11,7 @@ export const labels = {
   vat: (ratePercent: number) => `USt. ${ratePercent} %`,
   lateFee: "Mahngebühr",
   total: "Gesamtbetrag",
-  paymentTerms: "Zahlbar innerhalb von 14 Tagen ohne Abzug.",
+  paymentTerms: (dueDate: string) => `Zahlbar bis ${dueDate} ohne Abzug.`,
   reminderText: (number: string) =>
     `Zu Rechnung ${number} konnten wir noch keine Zahlung feststellen. Bitte überweisen Sie den offenen Betrag.`,
 };
