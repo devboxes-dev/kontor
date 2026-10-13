@@ -59,6 +59,16 @@ describe("customers", () => {
     const response = await api.customers.$post({ json: { ...customer, postalCode: "Leipzig" } });
     expect(response.status).toBe(400);
   });
+
+  it("rejects a German postal code with four digits", async () => {
+    const response = await api.customers.$post({ json: { ...customer, postalCode: "4179" } });
+    expect(response.status).toBe(400);
+  });
+
+  it("accepts an Austrian postal code with four digits", async () => {
+    const viennese = { ...customer, postalCode: "1070", city: "Wien", country: "AT" } as const;
+    expect((await api.customers.$post({ json: viennese })).status).toBe(201);
+  });
 });
 
 describe("invoices", () => {
