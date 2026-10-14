@@ -9,7 +9,7 @@ import {
   lineItems,
 } from "@kontor/db";
 import { renderInvoicePdf } from "@kontor/pdf";
-import { and, desc, eq, isNull } from "drizzle-orm";
+import { and, asc, desc, eq, isNull } from "drizzle-orm";
 import { Hono } from "hono";
 import { z } from "zod";
 
@@ -46,7 +46,7 @@ export function invoiceRoutes(db: Database) {
         .from(invoices)
         .innerJoin(customers, eq(invoices.customerId, customers.id))
         .where(open ? isNull(invoices.paidAt) : undefined)
-        .orderBy(desc(invoices.issuedAt));
+        .orderBy(open ? asc(invoices.dueOn) : desc(invoices.issuedAt));
       return c.json(rows);
     })
     .post("/", zValidator("json", invoiceInput), async (c) => {

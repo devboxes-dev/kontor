@@ -112,4 +112,16 @@ describe("invoices", () => {
     if (response.status !== 200) throw new Error(await response.text());
     expect((await response.json()).map((invoice) => invoice.id)).toEqual([open.id]);
   });
+
+  it("lists open invoices by due date, oldest first", async () => {
+    vi.useFakeTimers({ toFake: ["Date"] });
+    vi.setSystemTime(new Date("2026-04-01T08:00:00Z"));
+    const newer = await createInvoice();
+    vi.setSystemTime(new Date("2026-03-20T08:00:00Z"));
+    const older = await createInvoice();
+
+    const response = await api.invoices.$get({ query: { status: "open" } });
+    if (response.status !== 200) throw new Error(await response.text());
+    expect((await response.json()).map((invoice) => invoice.id)).toEqual([older.id, newer.id]);
+  });
 });
