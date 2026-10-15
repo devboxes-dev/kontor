@@ -4,6 +4,7 @@ Changes that customers or support notice. Versions follow [semantic versioning](
 
 ## Unreleased
 
+- The open invoices in the back office are sorted by due date, oldest first.
 - The customer form checks postal codes by country: five digits in Germany, four in Austria.
 
 ## 1.5.0 (2026-09-16)
