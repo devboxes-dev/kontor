@@ -3,7 +3,7 @@ import { labels, renderInvoicePdf } from "@kontor/pdf";
 import { and, count, eq, isNotNull, isNull, lt } from "drizzle-orm";
 import type { MailSender } from "../mail.ts";
 
-export const reminderLevels = [
+const reminderLevels = [
   { level: 1, daysOverdue: 7, lateFeeCents: 0 },
   { level: 2, daysOverdue: 14, lateFeeCents: 500 },
   { level: 3, daysOverdue: 21, lateFeeCents: 500 },
