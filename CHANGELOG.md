@@ -4,6 +4,7 @@ Changes that customers or support notice. Versions follow [semantic versioning](
 
 ## Unreleased
 
+- Invoices name the due date, "Zahlbar bis 15.04.2026", instead of "within 14 days".
 - The open invoices in the back office are sorted by due date, oldest first.
 - The customer form checks postal codes by country: five digits in Germany, four in Austria.
 

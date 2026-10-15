@@ -8,6 +8,13 @@ describe("renderInvoicePdf", () => {
     expect(await pdfText(await renderInvoicePdf(invoice))).toMatchSnapshot();
   });
 
+  it("asks for payment within 14 days of the invoice date", async () => {
+    const due = new Date(invoice.issuedAt);
+    due.setDate(due.getDate() + 14);
+    const dueDate = due.toLocaleDateString("de-DE", { day: "2-digit", month: "2-digit", year: "numeric" });
+    expect(await pdfText(await renderInvoicePdf(invoice))).toContain(`Zahlbar bis ${dueDate} ohne Abzug.`);
+  });
+
   it("prints the country for addresses outside Germany", async () => {
     const austrian = { ...invoice, customer: { ...invoice.customer, postalCode: "1070", city: "Wien", country: "AT" } };
     expect(await pdfText(await renderInvoicePdf(austrian))).toContain("Österreich");

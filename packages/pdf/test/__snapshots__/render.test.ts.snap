@@ -37,7 +37,7 @@ exports[`renderInvoicePdf > renders an invoice 1`] = `
   "Zwischensumme 53,30 €",
   "USt. 19 % 10,13 €",
   "Gesamtbetrag 63,43 €",
-  "Zahlbar innerhalb von 14 Tagen ohne Abzug.",
+  "Zahlbar bis 15.04.2026 ohne Abzug.",
   "Kontor GmbH · Beispielweg 4 · 04109 Leipzig · Amtsgericht Leipzig HRB 00000",
   "USt-IdNr. DE000000000 · IBAN DE89 3704 0044 0532 0130 00 · BIC COBADEFFXXX",
 ]

@@ -81,7 +81,8 @@ export async function renderInvoicePdf(invoice: InvoiceDocument): Promise<Uint8A
   textRight(page, formatMoney(totals.totalCents), columns.amount, y, bold);
 
   y -= 40;
-  text(invoice.reminder ? labels.reminderText(invoice.number) : labels.paymentTerms, left, y);
+  const dueDate = formatDate(new Date(invoice.dueOn));
+  text(invoice.reminder ? labels.reminderText(invoice.number) : labels.paymentTerms(dueDate), left, y);
 
   footer.forEach((line, index) => text(line, left, 60 - index * 11, regular, 7));
 
