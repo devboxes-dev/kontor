@@ -4,6 +4,7 @@ Changes that customers or support notice. Versions follow [semantic versioning](
 
 ## Unreleased
 
+- Prevent duplicate payment reminders on retries within 24 hours when the mail API accepted the first send but its response was lost or recording the send failed.
 - The open invoices in the back office are sorted by due date, oldest first.
 - The customer form checks postal codes by country: five digits in Germany, four in Austria.
 

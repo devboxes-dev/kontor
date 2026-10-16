@@ -1,6 +1,6 @@
 import { type Database, reminders } from "@kontor/db";
 import { createTestDatabase } from "@kontor/db/testing";
-import { beforeEach, describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { sendReminders } from "../src/jobs/send-reminders.ts";
 import { createInvoice, fakeMail } from "./helpers.ts";
 
@@ -39,6 +39,7 @@ describe("sendReminders", () => {
       { level: 2, lateFeeCents: 500, sentOn: "2026-04-29" },
       { level: 3, lateFeeCents: 500, sentOn: "2026-05-06" },
     ]);
+    expect(mail.delivered).toHaveLength(3);
   });
 
   it("does not remind paid or unsent invoices", async () => {
@@ -57,6 +58,23 @@ describe("sendReminders", () => {
     await sendReminders(db, mail.sender, new Date("2026-04-22T12:00:00Z"));
 
     expect(mail.delivered).toHaveLength(1);
+  });
+
+  it("does not redeliver a reminder on retry when the mail API accepted it but its response was lost", async () => {
+    const invoice = await createInvoice(db, { dueOn: "2026-10-07" });
+    const mail = fakeMail();
+    const send = vi.fn(mail.sender.send).mockImplementationOnce(async (...args) => {
+      await mail.sender.send(...args);
+      throw new Error("mail API response lost");
+    });
+
+    await expect(sendReminders(db, { send }, new Date("2026-10-14T04:02:00Z"))).rejects.toThrow("mail API response lost");
+    expect(mail.delivered).toHaveLength(1);
+    expect(await db.select().from(reminders)).toHaveLength(0);
+
+    expect(await sendReminders(db, { send }, new Date("2026-10-14T04:17:00Z"))).toEqual({ sent: 1 });
+    expect(mail.delivered).toHaveLength(1);
+    expect(await db.select().from(reminders)).toMatchObject([{ invoiceId: invoice.id, level: 1, sentOn: "2026-10-14" }]);
   });
 
   it("moves a reminder due on a weekend to Monday", async () => {
