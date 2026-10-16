@@ -28,12 +28,15 @@ export async function sendReminders(db: Database, mail: MailSender, now = new Da
     const invoice = (await findInvoice(db, id))!;
     const title = labels.reminder[next.level];
     const pdf = await renderInvoicePdf({ ...invoice, reminder: { level: next.level, lateFeeCents: next.lateFeeCents } });
-    await mail.send({
-      to: invoice.customer.email,
-      subject: `${title} zu Rechnung ${invoice.number}`,
-      text: `Guten Tag,\n\nzu Rechnung ${invoice.number} konnten wir noch keine Zahlung feststellen. Die Details finden Sie im Anhang.\n\nViele Grüße\nIhr Kontor-Team`,
-      attachments: [{ filename: `${title}-${invoice.number}.pdf`, content: pdf }],
-    });
+    await mail.send(
+      {
+        to: invoice.customer.email,
+        subject: `${title} zu Rechnung ${invoice.number}`,
+        text: `Guten Tag,\n\nzu Rechnung ${invoice.number} konnten wir noch keine Zahlung feststellen. Die Details finden Sie im Anhang.\n\nViele Grüße\nIhr Kontor-Team`,
+        attachments: [{ filename: `${title}-${invoice.number}.pdf`, content: pdf }],
+      },
+      { idempotencyKey: `reminder-${invoice.id}-${next.level}` },
+    );
     await db.insert(reminders).values({ invoiceId: id, level: next.level, lateFeeCents: next.lateFeeCents, sentOn: today });
     sent++;
   }

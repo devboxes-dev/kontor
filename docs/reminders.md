@@ -21,3 +21,5 @@ An email to the customer's address with the reminder as a PDF attachment. The su
 ## Failures
 
 The worker gives up on a mail API call after 10 seconds. When the job fails, the worker runs it again 15 minutes later, up to three attempts in total. Reminders that the job already recorded are not sent again.
+
+Each send uses an idempotency key for the invoice and reminder level. The mail API delivers only once per key within 24 hours, so a retry in that window does not deliver another copy if the API accepted the email but its response was lost or recording the send failed. Later reminder levels use different keys.
